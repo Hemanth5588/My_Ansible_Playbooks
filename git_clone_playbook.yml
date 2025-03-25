@@ -1,0 +1,24 @@
+---
+- name: Install Git, Clone the git repo and change the folder permissions
+  hosts: all
+  tasks:
+     - name: Install Git
+       apt:
+           name: git
+           state: present
+           update_cache: yes
+     - name: Clone remote git repo
+       git:
+           repo: https://github.com/Hemanth5588/Test-Repo.git
+           dest: /tmp/myrepo
+     - name: Changing the folder permissions
+       file:
+           name: /tmp/myrepo
+           mode: 0744
+     - name: Check in the servers
+       command: 'ls -ld /tmp/myrepo'
+       register: output
+     - name: Print th output of checking servers
+       debug:
+               var: output.stdout
+...

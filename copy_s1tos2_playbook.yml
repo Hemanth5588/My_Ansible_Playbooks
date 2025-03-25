@@ -1,0 +1,28 @@
+---
+- name: Fetch the file from ansible1 server
+  hosts: 52.228.21.86
+  tasks:
+   - name: Fetching the file file1
+     fetch:
+        src: /tmp/file1
+        dest: /tmp
+   - name: Check in the destination
+     command: 'cat /tmp/file1'
+     register: fetchedfile
+   - name: Display out of the above module
+     debug:
+        var: fetchedfile.stdout_lines
+- name: Copy the file to ansible2 server
+  hosts: 52.228.61.69
+  tasks:
+   - name: Copying the file1 file
+     copy:
+        src: /tmp/52.228.21.86/tmp/file1
+        dest: /tmp
+   - name: Check in the destination
+     command: 'cat /tmp/file1'
+     register: copiedfile
+   - name: Display out of the above module
+     debug:
+        var: copiedfile.stdout_lines
+...

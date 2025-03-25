@@ -1,0 +1,16 @@
+---
+- name: Docker Install using apt module
+  hosts: all
+  tasks:
+    - name: Install docker-ce (community edition)
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: yes
+    - name: checking the docker version
+      shell: 'docker --version'
+      register: docker_version
+    - name: Display the output of above module
+      debug:
+         var: docker_version.stdout_lines
+...

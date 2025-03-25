@@ -1,0 +1,15 @@
+---
+- name: Install the Docker
+  hosts: all
+  tasks:
+     - name: Download the docker shell script
+       shell: 'curl -fsSL https://get.docker.com -o install-docker.sh'
+     - name: Run the docker shell script
+       shell: 'sudo sh install-docker.sh'
+     - name: Check the docker version on all servers
+       shell: 'sudo docker --version'
+       register: docker_version
+     - name: Display the output of above module
+       debug:
+         var: docker_version.stdout_lines
+...
