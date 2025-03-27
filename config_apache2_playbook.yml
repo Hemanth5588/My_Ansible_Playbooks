@@ -1,0 +1,27 @@
+---
+- name: Configuration of the apache2 and check the url on all servers
+  hosts: all
+  tasks:
+     - name: Install apache2
+       apt:
+         name: apache2
+         state: present
+         update_cache: yes
+     - name: Copy the customized index.html
+       copy:
+          # src: /home/azureuser/My_Sample_Home_page/index.html
+          content: '<h1 align="center">Welcome to IntelliQIT</h1>'
+          dest: /var/www/html/index.html
+     - name: Restart apache2
+       service:
+           name: apache2
+           state: restarted
+     - name: Check the apache response on server1
+       uri:
+          url: http://4.206.69.249
+          status_code: 200
+     - name: Check the apache response on server2
+       uri:
+          url: http://4.206.69.142
+          status_code: 200
+...
